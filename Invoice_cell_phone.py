@@ -70,7 +70,7 @@ def export_csv(file1,file2):
                     b = A[i]['y'][a+5]
                     A_n = A[i][A[i]['y']==b].sort_values(by=['x','y']).reset_index(drop=True)
                     Date_Of_Incident = A_n['description'][0][0:10]
-                    Penal_Code = A_n['description'][0][10:-1].lstrip()
+                    Penal_Code = A_n['description'][0][10:].lstrip()
                     if Penal_Code == "":
                         Penal_Code = None
                     Crime_Classification = A_n[A_n['x']==349]['description'].values
@@ -88,6 +88,10 @@ def export_csv(file1,file2):
                         Receipt = None
                     else:
                         Receipt = Receipt[0]
+                    if Date_Of_Incident == 'Prisoner(s':
+                        Date_Of_Incident = None
+                    if Penal_Code == ')':
+                        Penal_Code = None
                     B["Date Of Incident"] = Date_Of_Incident
                     B["Penal Code/Description"] = Penal_Code
                     B["Crime Classification"] = Crime_Classification
@@ -137,4 +141,3 @@ export_csv('Cell_Phone_20.xml','Invoice_cell_phone_20.csv')
 export_csv('Cell_Phone_21.xml','Invoice_cell_phone_21.csv')
 export_csv('Cell_Phone_22.xml','Invoice_cell_phone_22.csv')
 export_csv('Cell_Phone_23.xml','Invoice_cell_phone_23.csv')
-
